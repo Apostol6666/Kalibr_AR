@@ -1,0 +1,72 @@
+#import matplotlib.pyplot as plt
+ #import matplotlib.animation as anim
+ #import math
+import serial
+import time
+ 
+ser = serial.Serial('COM8', 9600)
+ 
+commands: {
+        's':'start'
+        }
+ 
+def get_value(ser):
+    command = input('Write command    ');
+    if command == "start" :
+        print('start')
+        #while ser.in_waiting():
+        for i in range(1000):
+               ser.write(0)
+               val3 = ser.readline()
+               val1 = [] + [ser.readline()]
+             
+               ser.write(1)
+               val2 = [] + [ser.readline()]
+               
+               k=[]
+               
+               val3 = start_calibration_mode(val1, val2, k)
+               normal_mode(val1, val2, val3)
+               
+              for i in range(999):
+                  count = k [i] + k[i+1]
+              count = count / 1000
+              
+              go(val1, val2, count)
+               
+               
+    else:
+        if command == "stop":
+               print('stop')
+        else:
+               print('fail')
+       
+def start_calibration_mode(val1, val2, k):
+    k = [] + [val1/val2]
+    val3 = val1 - val2
+    return val3
+    
+def normal_mode(val1, val2, val3):
+    val2 = val2 - val3
+    for i in range(1000):
+        print('Первое = ', val1[i],' ; ', 'Второе = ', val2[i], '/n') 
+        
+def go(val1, val2, count):
+    
+    val2[]*count
+    
+    if val2+val<val1[i-1]+val[i-1]:
+        ser.write(2)
+        if val2[i-1] - val1[i-1] < val2[i] - val[1]:
+            ser.write(3)
+        else:
+        ser.write(4)
+    else: 
+        ser.write(5)
+        if val2[i-1] - val1[i-1] < val2[i] - val[1]:
+            ser.write(3)
+        else:
+        ser.write(4)
+    
+get_value(ser)
+ser.close()
