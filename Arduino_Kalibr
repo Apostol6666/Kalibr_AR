@@ -1,0 +1,35 @@
+#define PIN_PHOTO_SENSOR A0
+#define PIN_PHOTO A5
+
+String buffer ;
+
+void setup () {
+Serial.begin(115200);
+buffer.reserve(30);
+}
+
+void loop() {
+  if (Serial.available()>0) {
+    char symbol = (char)Serial.read();
+    if(symbol != '\n') {
+      buffer += symbol;
+    }
+    else {
+      buffer.toLowerCase();
+      Serial.print("Received:");
+      Serial.println(buffer);
+        if (buffer == 0) {
+        int value1 = analogRead(PIN_PHOTO_SENSOR);
+        Serial.println(value1);
+        if (buffer == 1) {
+        int value2 = analogRead(PIN_PHOTO);
+        Serial.println(value2);
+        }
+        }
+      else {
+        Serial.println("fail");
+      }
+      buffer = "";
+      }
+    }
+  }
